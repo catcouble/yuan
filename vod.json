@@ -1,0 +1,159 @@
+{
+    "sites": [
+        {
+            "name": "厂长资源",
+            "type": 3,
+            "api": "csp_czzy",
+            "ext": "https://raw.githubusercontent.com/catcouble/yuan/refs/heads/main/vod/czzy.js"
+        },
+        {
+            "name": "哔滴影视",
+            "type": 3,
+            "api": "csp_bde4",
+            "ext": "https://raw.githubusercontent.com/catcouble/yuan/refs/heads/main/vod/bdys.js"
+        },
+        { 
+            "name": "欧乐🪜", 
+            "type": 3, 
+            "api": "csp_Olevod",
+            "ext": "https://raw.githubusercontent.com/catcouble/yuan/refs/heads/main/vod/ole.js",
+            "ext2": "https://raw.githubusercontent.com/catcouble/yuan/refs/heads/main/vod/ole.js"
+        },
+         { 
+            "name": "在线之家", 
+            "type": 3, 
+            "api": "csp_Zxzj",
+            "ext": "https://raw.githubusercontent.com/catcouble/yuan/refs/heads/main/vod/zxzj.js",
+            "ext2": "https://raw.githubusercontent.com/catcouble/yuan/refs/heads/main/vod/zxzj.js"
+        },
+        { 
+            "name": "LIBVIO", 
+            "type": 3, 
+            "api": "csp_libvio",
+            "ext": "https://raw.githubusercontent.com/catcouble/yuan/refs/heads/main/vod/libvio.js"
+        },
+        { 
+            "name": "低端影视", 
+            "type": 3, 
+            "api": "csp_ddys",
+            "ext": "https://raw.githubusercontent.com/catcouble/yuan/refs/heads/main/vod/ddys.js"
+        },
+         { 
+            "name": "ギリギリ动漫", 
+            "type": 3, 
+            "api": "csp_ai",
+            "ext": "https://raw.githubusercontent.com/catcouble/yuan/refs/heads/main/vod/ai.js",
+        },
+        { 
+            "name": "独播库", 
+            "type": 3, 
+            "api": "csp_duboku",
+            "ext": "https://raw.githubusercontent.com/catcouble/yuan/refs/heads/main/vod/duboku.js"
+        },
+        { 
+            "name": "AGE动漫", 
+            "type": 3, 
+            "api": "csp_age",
+            "ext": "https://raw.githubusercontent.com/catcouble/yuan/refs/heads/main/vod/age.js"
+        },
+        {
+            "name": "4k-av",
+            "type": 3,
+            "api": "csp_4kav",
+            "ext": "https://raw.githubusercontent.com/catcouble/yuan/refs/heads/main/vod4kav.js"
+        },
+        {
+            "name": "韓劇看看",
+            "type": 3,
+            "api": "csp_hjkk",
+            "ext": "https://raw.githubusercontent.com/catcouble/yuan/refs/heads/main/vodhjkk.js"
+        },
+        {
+            "name": "金牌影院",
+            "type": 3,
+            "api": "csp_jpyy",
+            "ext": "https://raw.githubusercontent.com/catcouble/yuan/refs/heads/main/vodjpyy.js"
+        },
+        {
+            "name": "燒火電影",
+            "type": 3,
+            "api": "csp_saohuo",
+            "ext": "https://raw.githubusercontent.com/catcouble/yuan/refs/heads/main/vodsaohuo.js"
+        },
+        {
+            "name": "素白白影視",
+            "type": 3,
+            "api": "csp_subaibai",
+            "ext": "https://raw.githubusercontent.com/catcouble/yuan/refs/heads/main/vodsubaibai.js"
+        },
+        {
+            "name": "兩個BT",
+            "type": 3,
+            "api": "csp_bttwo",
+            "ext": "https://raw.githubusercontent.com/catcouble/yuan/refs/heads/main/vodbttwo.js"
+        },
+        {
+            "name": "NO視頻",
+            "type": 3,
+            "api": "csp_novipnoad",
+            "ext": "https://raw.githubusercontent.com/catcouble/yuan/refs/heads/main/vodnovipnoad.js"
+        },
+        {
+            "name": "星芽短劇",
+            "type": 3,
+            "api": "csp_xingya",
+            "ext": "https://raw.githubusercontent.com/catcouble/yuan/refs/heads/main/vodxingya.js"
+        },
+        {
+            "name": "瓜子",
+            "type": 3,
+            "api": "csp_guazi",
+            "ext": "https://raw.githubusercontent.com/catcouble/yuan/refs/heads/main/vodgzys.js"
+        },
+        {
+            "name": "anfuns",
+            "type": 3,
+            "api": "csp_anfuns",
+            "ext": "https://raw.githubusercontent.com/catcouble/yuan/refs/heads/main/vodanfuns.js"
+        },
+        {
+            "name": "愛壹帆",
+            "type": 3,
+            "api": "csp_iyftv",
+            "ext": "https://raw.githubusercontent.com/catcouble/yuan/refs/heads/main/vodiyftv.js"
+        },
+        {
+            "name": "天天影視",
+            "type": 3,
+            "api": "csp_tiantian",
+            "ext": "https://raw.githubusercontent.com/catcouble/yuan/refs/heads/main/vodtiantian.js"
+        },
+        {
+            "name": "囧次元",
+            "type": 3,
+            "api": "csp_jcy",
+            "ext": "https://raw.githubusercontent.com/catcouble/yuan/refs/heads/main/vodjcy.js"
+        },
+        {
+            "name": "hdmoli",
+            "type": 3,
+            "api": "csp_hdmoli",
+            "ext": "https://raw.githubusercontent.com/catcouble/yuan/refs/heads/main/vod/hdmoli.js"
+        },
+        {
+            "name": "nmlive",
+            "type": 3,
+            "api": "csp_nmlive",
+            "ext": "https://raw.githubusercontent.com/catcouble/yuan/refs/heads/main/vodnmlive.js"
+        },
+        {
+            "name": "小蘋果",
+            "type": 3,
+            "api": "csp_apple",
+            "ext": "https://raw.githubusercontent.com/catcouble/yuan/refs/heads/main/vodapple.js"
+        }
+    ]
+}
+
+
+
