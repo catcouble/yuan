@@ -1,51 +1,87 @@
 const cheerio = createCheerio()
-const CryptoJS = createCryptoJS()
-const UA = 'Mozilla/5.0 (iPhone; CPU iPhone OS 18_2 like Mac OS X) AppleWebKit/604.1.14 (KHTML, like Gecko)'
+const UA = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
 const headers = {
-  'Referer': 'https://www.xlys01.com/',
-  'Origin': 'https://www.xlys01.com',
+  'Referer': 'https://ddys.pro/',
+  'Origin': 'https://ddys.pro',
   'User-Agent': UA,
 }
 
 const appConfig = {
   ver: 1,
-  title: "哔滴影视",
-  site: "https://www.xlys01.com",
+  title: "低端影视",
+  site: "https://ddys.pro/",
   tabs: [{
-    name: '最新电影',
+    name: '首页',
     ext: {
-      url: '/s/all/1?type=0',
+      url: '/'
     },
   }, {
-    name: '最新剧集',
+    name: '所有电影',
     ext: {
-      url: '/s/all/1?type=1'
+      url: '/category/movie/'
     },
   }, {
-    name: '欧美剧集',
+    name: '连载剧集',
     ext: {
-      url: '/s/meiju/1',
+      url: '/category/airing/',
+      hasMore: false
     },
   }, {
-    name: '日韩剧集',
+    name: '本季新番',
     ext: {
-      url: '/s/hanju/1',
+      url: '/category/anime/new-bangumi/',
+      hasMore: false
     },
   }, {
-    name: '港台剧集',
+    name: '动画',
     ext: {
-      url: '/s/gangtaiju/1'
+      url: '/category/anime/'
     },
   }, {
-    name: '动漫',
+    name: '华语电影',
     ext: {
-      url: '/s/donghua/1?type=1'
+      url: '/category/movie/chinese-movie/'
+    },
+  }, {
+    name: '欧美电影',
+    ext: {
+      url: '/category/movie/western-movie/'
+    },
+  }, {
+    name: '日韩电影',
+    ext: {
+      url: '/category/movie/asian-movie/'
+    },
+  }, {
+    name: '豆瓣电影Top250',
+    ext: {
+      url: '/tag/douban-top250/'
+    },
+  }, {
+    name: '欧美剧',
+    ext: {
+      url: '/category/drama/western-drama/'
+    },
+  }, {
+    name: '日剧',
+    ext: {
+      url: '/category/drama/jp-drama/'
+    },
+  }, {
+    name: '韩剧',
+    ext: {
+      url: '/category/drama/kr-drama/'
+    },
+  }, {
+    name: '华语剧',
+    ext: {
+      url: '/category/drama/cn-drama/'
     },
   }]
 }
 
 async function getConfig() {
-  return jsonify(appConfig)
+    return jsonify(appConfig)
 }
 
 async function getCards(ext) {
@@ -61,27 +97,21 @@ async function getCards(ext) {
     })
   }
 
-  url = appConfig.site + url.replace('/1', `/${page}`)
+  url = appConfig.site + url + `/page/${page}/`
 
   const { data } = await $fetch.get(url, {
     headers
   })
 
   const $ = cheerio.load(data)
-  const t1 = $('title').text()
-  if (t1 === 'Just a moment...') {
-    $utils.openSafari(appConfig.site, UA)
-  }
-  
-  $('.card-link').each((_, each) => {
-    const path = $(each).find('a').attr('href')
+  $('article.post').each((_, each) => {
     cards.push({
-      vod_id: path,
-      vod_name: $(each).find('.card-title').text(),
-      vod_pic: $(each).find('img').attr('src'),
-      vod_remarks: $(each).find('span.badge').text(),
+      vod_id: $(each).find('h2 > a').attr('href'),
+      vod_name: $(each).find('h2.post-box-title').text(),
+      vod_pic: $(each).find('.post-box-image').attr('style').replace('background-image: url(', '').replace('");"', ''),
+      vod_remarks: $(each).find('div.post-box-text > p').text(),
       ext: {
-        url: appConfig.site + path,
+        url: $(each).find('h2 > a').attr('href'),
       },
     })
   })
@@ -92,95 +122,114 @@ async function getCards(ext) {
 }
 
 async function getTracks(ext) {
-  const { url } = argsify(ext)
-  let groups = []
+    ext = argsify(ext);
+    let groups = [];
+    let url = ext.url;
 
-  const { data } = await $fetch.get(url, {
-    headers
-  })
-  const $ = cheerio.load(data)
-  let group = {
-    title: '在线',
-    tracks: []
-  }
-  $('a.btn').each((_, each) => {
-    let path = $(each).attr('href') ?? ''
-    if (path.startsWith('/play/') || path.startsWith('/guoju/play/')) {
-      group.tracks.push({
-        name: $(each).text(),
-        pan: '',
-        ext: {
-          url: appConfig.site + path
+    const { data } = await $fetch.get(url, {
+        headers
+    });
+
+    const $ = cheerio.load(data);
+
+    const seasonNumbers = [];
+    $('.page-links .post-page-numbers').each((_, each) => {
+        const seasonNumber = $(each).text();
+        if (!isNaN(seasonNumber)) {
+            seasonNumbers.push(seasonNumber);
         }
-      })
+    });
+
+    if (seasonNumbers.length === 0) {
+        let onlineGroup = {
+            title: '在线',
+            tracks: []
+        };
+
+        const trackText = $('script.wp-playlist-script').text();
+        const tracks = JSON.parse(trackText).tracks;
+
+        tracks.forEach(each => {
+            onlineGroup.tracks.push({
+                name: each.caption,
+                pan: '',
+                ext: each
+            });
+        });
+
+        groups.push(onlineGroup);
+    } else {
+        for (const season of seasonNumbers) {
+            let seasonGroup = {
+                title: `第${season}季`,
+                tracks: []
+            };
+
+            const seasonUrl = `${url}${season}/`;
+            const seasonData = await $fetch.get(seasonUrl, {
+                headers
+            });
+            const season$ = cheerio.load(seasonData.data);
+
+            const trackText = season$('script.wp-playlist-script').text();
+            const tracks = JSON.parse(trackText).tracks;
+
+            tracks.forEach(each => {
+                seasonGroup.tracks.push({
+                    name: each.caption,
+                    pan: '',
+                    ext: each
+                });
+            });
+
+            groups.push(seasonGroup);
+        }
     }
-  })
-  groups.push(group)
-  return jsonify({ list: groups })
+
+    let group2 = {
+        title: '',
+        tracks: []
+    };
+    $('a').each((_, each) => {
+        const v = $(each).attr('href');
+        if (v.startsWith('https://drive.uc.cn/s')) {
+            group2.tracks.push({
+                name: 'uc网盘',
+                pan: v,
+            });
+        } else if (v.startsWith('https://pan.quark.cn/s/')) {
+            group2.tracks.push({
+                name: '夸克网盘',
+                pan: v,
+            });
+        }
+    });
+    if (group2.tracks.length > 0) {
+        groups.push(group2);
+    }
+
+    return jsonify({ list: groups });
 }
 
 async function getPlayinfo(ext) {
-  const { url } = argsify(ext)
-  const { data } = await $fetch.get(url, {
-    headers
-  })
-  let pid = data.match(/var pid = (\d+);/)[1]
-  let currentTimeMillis = Date.now()
-  let str4 = pid + '-' + currentTimeMillis
-  let md5Hash = CryptoJS.MD5(str4).toString(CryptoJS.enc.Hex)
-  while (md5Hash.length < 32) {
-      md5Hash = '0' + md5Hash
-  }
-  md5Hash = md5Hash.toLowerCase()
-  let key = CryptoJS.enc.Utf8.parse(md5Hash.substring(0, 16))
-  let encrypted = CryptoJS.AES.encrypt(CryptoJS.enc.Utf8.parse(str4), key, {
-      mode: CryptoJS.mode.ECB,
-      padding: CryptoJS.pad.Pkcs7
-  })
-  let encryptedHex = encrypted.ciphertext.toString(CryptoJS.enc.Hex)
-  let encryptedString = encryptedHex.toUpperCase()
-  let lines = appConfig.site + '/lines?t=' + currentTimeMillis + '&sg=' + encryptedString + '&pid=' + pid
-  const data2 = (await $fetch.get(lines, {
-    headers
-  })).data
-  
-  if (JSON.parse(data2).data.url3) {
-    let url3 = JSON.parse(data2).data.url3
-    let play = url3.indexOf(',') !== -1 ? url3.split(',')[0].trim() : url3.trim()
+    ext = argsify(ext)
+    const { srctype, src0, } = ext
+    let url = ''
+    if (srctype) {
+      url = 'https://v.ddys.pro' + src0
+    }
+
+    $print('***url: ' + url)
     return jsonify({
-      urls: [play],
+      urls: [url],
+      headers: [{
+        'Referer': 'https://ddys.mov/',
+        'Origin': 'https://ddys.mov',
+        'User-Agent': UA,
+      }],
+      ui: 1,
     })
-  } else if (JSON.parse(data2).data.tos) {
-    let god = `${appConfig.site}/god/${pid}?type=1`
-    let res = await $fetch.post(god, {
-      t: currentTimeMillis,
-      sg: encryptedString,
-      verifyCode: 888,
-    }, {
-      'User-Agent': headers,
-      'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
-    })
-    
-    let playUrl = argsify(res.data).url
-    return jsonify({
-      urls: [playUrl],
-    })
-  } else {
-    let god = `${appConfig.site}/god/${pid}`
-    let res = await $fetch.post(god, {
-      t: currentTimeMillis,
-      sg: encryptedString,
-      verifyCode: 666,
-    }, {
-      'User-Agent': headers,
-      'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
-    })
-    
-    let playUrl = argsify(res.data).url
-    return jsonify({
-      urls: [playUrl],
-    })
-  }
+    // return jsonify({urls: []})
 }
 
 async function search(ext) {
@@ -195,21 +244,24 @@ async function search(ext) {
     })
   }
 
-  const url = appConfig.site + `/search/${text}?code=112`
+  const url = appConfig.site + `/?s=${text}&post_type=post`
   const { data } = await $fetch.get(url, {
     headers
   })
   
   const $ = cheerio.load(data)
-  $('div.row').each((_, each) => {
-    const a = $(each).find('a.search-movie-title')
+  $('article.post').each((_, each) => {
+    const bgStyle = $(each).find('.post-box-image').attr('style') || ''
+    const imgMatch = bgStyle.match(/background-image: url\((.*?)\)/)
+    const imgUrl = imgMatch ? imgMatch[1].replace(/["']/g, '') : ''
+    
     cards.push({
-      vod_id: a.attr('href'),
-      vod_name: a.attr('title'),
-      vod_pic: $(each).find('img.object-cover').attr('src'),
-      vod_remarks: '',
+      vod_id: $(each).find('h2 > a').attr('href'),
+      vod_name: $(each).find('h2.post-title').text(),
+      vod_pic: imgUrl,
+      vod_remarks: $(each).find('div.entry-content > p').text(),
       ext: {
-        url: appConfig.site + a.attr('href'),
+        url: $(each).find('h2 > a').attr('href'),
       },
     })
   })
