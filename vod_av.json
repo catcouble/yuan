@@ -1,0 +1,106 @@
+{
+    "sites": [
+        {
+            "name": "MISSAV", 
+            "type": 3, 
+            "api": "csp_miss",
+            "ext": "https://raw.githubusercontent.com/catcouble/yuan/refs/heads/main/vod/av/missav.js"
+        },
+        {
+            "name": "麻豆社",
+            "type": 3,
+            "api": "csp_madou",
+            "ext": "https://raw.githubusercontent.com/catcouble/yuan/refs/heads/main/vod/av/madou.js"
+        },
+        {
+            "name": "玩偶姐姐",
+            "type": 3,
+            "api": "csp_hkdoll",
+            "ext": "https://raw.githubusercontent.com/catcouble/yuan/refs/heads/main/vod/av/hkdoll.js"
+        },
+        {
+            "name": "Hanime1",
+            "type": 3,
+            "api": "csp_Hanime1",
+            "ext": "https://raw.githubusercontent.com/catcouble/yuan/refs/heads/main/vod/av/hanime.js"
+        },
+        {
+            "name": "秋名山見(live)",
+            "type": 3,
+            "api": "csp_harunasan",
+            "ext": "https://raw.githubusercontent.com/catcouble/yuan/refs/heads/main/vod/av/harunasan.js"
+        },
+        {
+            "name": "SupJav",
+            "type": 3,
+            "api": "csp_SupJav",
+            "ext": "https://raw.githubusercontent.com/catcouble/yuan/refs/heads/main/vod/av/SupJav.js"
+        },
+        {
+            "name": "91jav (無海報)",
+            "type": 3,
+            "api": "csp_91jav",
+            "ext": "https://raw.githubusercontent.com/catcouble/yuan/refs/heads/main/vod/av/91jav.js"
+        },
+        {
+            "name": "hohoj",
+            "type": 3,
+            "api": "csp_hohoj",
+            "ext": "https://raw.githubusercontent.com/catcouble/yuan/refs/heads/main/vod/av/hohoj.js"
+        },
+        {
+            "name": "KoreaPornMovie",
+            "type": 3,
+            "api": "csp_KPM",
+            "ext": "https://raw.githubusercontent.com/catcouble/yuan/refs/heads/main/vod/av/KoreaPornMovie.js"
+        },
+        {
+            "name": "pppHub",
+            "type": 3,
+            "api": "csp_ppron",
+            "ext": "https://raw.githubusercontent.com/catcouble/yuan/refs/heads/main/vod/av/ppp.js"
+        },
+        {
+            "name": "avtoday",
+            "type": 3,
+            "api": "csp_avtoday",
+            "ext": "https://raw.githubusercontent.com/catcouble/yuan/refs/heads/main/vod/av/avtoday.js"
+        },
+        {
+            "name": "xhamster",
+            "type": 3,
+            "api": "csp_xhamster",
+            "ext": "https://raw.githubusercontent.com/catcouble/yuan/refs/heads/main/vod/av/xhamster.js"
+        },
+        {
+            "name": "pornhub",
+            "type": 3,
+            "api": "csp_pornhub",
+            "ext": "https://raw.githubusercontent.com/catcouble/yuan/refs/heads/main/vod/av/pornhub.js"
+        },
+        {
+            "name": "jable",
+            "type": 3,
+            "api": "csp_jable",
+            "ext": "https://raw.githubusercontent.com/catcouble/yuan/refs/heads/main/vod/av/jable.js"
+        },
+        {
+            "name": "桃花族",
+            "type": 3,
+            "api": "csp_taohuazu",
+            "ext": "https://raw.githubusercontent.com/catcouble/yuan/refs/heads/main/vod/av/taohuazu.js"
+        },
+        {
+            "name": "花都影視",
+            "type": 3,
+            "api": "csp_hdys",
+            "ext": "https://raw.githubusercontent.com/catcouble/yuan/refs/heads/main/vod/av/hdys.js"
+        },
+        {
+            "name": "肉视频",
+            "type": 3,
+            "api": "csp_rou",
+            "ext": "https://raw.githubusercontent.com/catcouble/yuan/refs/heads/main/vod/av/rou.js"
+        }
+    ]
+}
