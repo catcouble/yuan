@@ -251,10 +251,14 @@ async function search(ext) {
   
   const $ = cheerio.load(data)
   $('article.post').each((_, each) => {
+    const bgStyle = $(each).find('.post-box-image').attr('style') || ''
+    const imgMatch = bgStyle.match(/background-image: url\((.*?)\)/)
+    const imgUrl = imgMatch ? imgMatch[1].replace(/["']/g, '') : ''
+    
     cards.push({
       vod_id: $(each).find('h2 > a').attr('href'),
       vod_name: $(each).find('h2.post-title').text(),
-      vod_pic: '',
+      vod_pic: imgUrl,
       vod_remarks: $(each).find('div.entry-content > p').text(),
       ext: {
         url: $(each).find('h2 > a').attr('href'),
